@@ -12,11 +12,12 @@ const app = express();
 
 app.use(logger('dev'));
 // there's no need to mount express.urlencoded middleware
-// why is that?
+
 app.use(express.json());
 // Configure both serve-favicon & static middleware
 // to serve from the production 'build' folder
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
+
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Check if token and create req.user
@@ -35,6 +36,11 @@ app.get('/*', function(req, res) {
 // Configure to use port 3001 instead of 3000 during
 // development to avoid collision with React's dev server
 const port = process.env.PORT || 3001;
+
+// Added functon below for heroku deploy on 7/15/22
+if (process.env.NODE_ENV === 'production'){
+  app.use(express.static('/build'))
+}
 
 app.listen(port, function() {
   console.log(`Express app running on port ${port}`)
