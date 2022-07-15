@@ -37,10 +37,6 @@ app.get('/*', function(req, res) {
 // development to avoid collision with React's dev server
 const port = process.env.PORT || 3001;
 
-// Added functon below for heroku deploy on 7/15/22
-if (process.env.NODE_ENV === 'production'){
-  app.use(express.static('/build'))
-}
 
 app.listen(port, function() {
   console.log(`Express app running on port ${port}`)
